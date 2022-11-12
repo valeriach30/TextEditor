@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package texteditor;
+package Modelo;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public abstract class BaseCommand implements ICommand {       
     
@@ -13,7 +14,7 @@ public abstract class BaseCommand implements ICommand {
     public abstract String getCommandName();       
     
     @Override       
-    public abstract void execute(String[] args, OutputStream out);       
+    public abstract void execute(ArrayList<String> args, OutputStream out);       
     
     public void write(OutputStream out, String message) {           
         try {   out.write(message.getBytes());   

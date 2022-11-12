@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package texteditor;
+package Modelo;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class ErrorCommand extends BaseCommand {       
     private static final String COMMAND_NAME = "ERROR";       
@@ -16,7 +17,7 @@ public class ErrorCommand extends BaseCommand {
     }       
     
     @Override       
-    public void execute(String[] args, OutputStream out) {           
+    public void execute(ArrayList<String> args, OutputStream out) {           
         String message = "Error al invocar el comando";   
         write(out, message);   
     }   

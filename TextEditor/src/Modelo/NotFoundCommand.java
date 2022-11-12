@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package texteditor;
+package Modelo;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class NotFoundCommand extends BaseCommand {       
     private static final String COMMAND_NAME = "NOT FOUND";       
@@ -15,7 +16,7 @@ public class NotFoundCommand extends BaseCommand {
     }       
     
     @Override       
-    public void execute(String[] args, OutputStream out) {           
+    public void execute(ArrayList<String> args, OutputStream out) {           
         write(out, "Comando no encontrado");   
     }   
 }

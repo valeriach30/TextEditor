@@ -2,24 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package texteditor;
+package Modelo;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 /**
  *
  * @author vchin
  */
-public class ResaltarCommand extends BaseCommand {
-    public static final String COMMAND_NAME = "reasaltar";       
+public class RedoCommand extends BaseCommand{
+    public static final String COMMAND_NAME = "redo";       
     
     @Override       
     public String getCommandName() {           
         return COMMAND_NAME;   
     }       
     
-    @Override       
-    public void execute(String[] args, OutputStream out) {           
+    @Override
+    public void execute(ArrayList<String> args, OutputStream out) {
         // falta implementar
     }
 }
