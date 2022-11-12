@@ -17,9 +17,11 @@ public class ErrorCommand extends BaseCommand {
     }       
     
     @Override       
-    public String execute(ArrayList<String> args, OutputStream out) {           
+    public ArrayList<String> execute(ArrayList<String> args, OutputStream out) {           
+        ArrayList<String> array = new ArrayList<String>();
         String message = "Error al invocar el comando";   
-        return message;  
+        array.add(message);
+        return array;  
     }   
 }
 

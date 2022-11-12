@@ -10,7 +10,8 @@ package Modelo;
  */
 public class Archivo {
     private String contenido;       
-    
+    private String nombre;
+    private String direccion;
     
     public Archivo(String contenido) {
         this.contenido = contenido;
@@ -18,6 +19,12 @@ public class Archivo {
     
     public Archivo(){
         
+    }
+
+    public Archivo(String contenido, String nombre, String direccion) {
+        this.contenido = contenido;
+        this.nombre = nombre;
+        this.direccion = direccion;
     }
     
     
@@ -34,7 +41,9 @@ public class Archivo {
     // uno a uno los valores del estado
     public void restoreMemento(ArchivoMemento memento){           
         Archivo archivo = memento.getMemento();           
-        this.contenido = archivo.contenido;           
+        this.contenido = archivo.contenido;     
+        this.nombre = archivo.nombre;       
+        this.direccion = archivo.direccion;       
     }   
 
 }

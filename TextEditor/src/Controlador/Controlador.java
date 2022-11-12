@@ -39,8 +39,13 @@ public class Controlador {
         
         ArrayList<String> commandArgs = new ArrayList<String>();
         ICommand command = manager.getCommand("abrir");   
-        String seleccion = command.execute(commandArgs, System.out); 
-        return seleccion;      
+        ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
+        String contenido = arrayArchivo.get(0);
+        String direccion = arrayArchivo.get(1);
+        String nombre = arrayArchivo.get(2);
+        this.archivo = new Archivo(contenido, nombre, direccion);
+        System.out.println(archivo.toString());
+        return contenido;      
     }
     
     public void guardarArchivo() {

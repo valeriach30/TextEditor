@@ -25,13 +25,16 @@ public class AbrirCommand extends BaseCommand{
     }       
 
     @Override
-    public String execute(ArrayList<String> args, OutputStream out) {
+    public ArrayList<String>  execute(ArrayList<String> args, OutputStream out) {
+        ArrayList<String> array = new ArrayList<String>();
         String contenido = "";
+        
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Txt and Json Files", "txt", "json");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Txt and Json Files", "txt", "json");
         chooser.setFileFilter(filter);
+        
         int returnVal = chooser.showOpenDialog(null);
+        
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             // Crear el archivo con el directorio
             File archivo = new File(chooser.getSelectedFile().toString());
@@ -40,13 +43,17 @@ public class AbrirCommand extends BaseCommand{
                 while(scanner.hasNextLine()){
                     contenido += "\n" + scanner.nextLine();
                 }
-                return contenido;
+                array.add(contenido);
+                array.add(chooser.getSelectedFile().getPath());
+                array.add(chooser.getSelectedFile().getName());
+                return array;
             }
             catch(FileNotFoundException e){
-                return e.toString();
+                array.add(e.toString());
+                return array;
             }
         } 
-        return "";
+        return null;
     }
 }
  

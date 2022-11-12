@@ -14,7 +14,7 @@ public abstract class BaseCommand implements ICommand {
     public abstract String getCommandName();       
     
     @Override       
-    public abstract String execute(ArrayList<String> args, OutputStream out);       
+    public abstract ArrayList<String> execute(ArrayList<String> args, OutputStream out);       
     
     public void write(OutputStream out, String message) {           
         try {   out.write(message.getBytes());   
