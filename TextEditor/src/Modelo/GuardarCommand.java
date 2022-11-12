@@ -20,7 +20,8 @@ public class GuardarCommand extends BaseCommand {
     }       
     
     @Override
-    public void execute(ArrayList<String> args, OutputStream out) {
+    public String execute(ArrayList<String> args, OutputStream out) {
         // falta implementar
+        return  "";
     }
 }

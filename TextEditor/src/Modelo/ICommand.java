@@ -13,5 +13,5 @@ import java.util.ArrayList;
  */
 public interface ICommand {
     public String getCommandName();       
-    public void execute(ArrayList<String> args, OutputStream out);   
+    public String execute(ArrayList<String> args, OutputStream out);   
 }

@@ -5,19 +5,23 @@
 package Vista;
 
 import java.awt.Color;
-
+import Controlador.Controlador;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 /**
  *
  * @author vchin
  */
 public class TextEditor extends javax.swing.JDialog {
 
+    Controlador control;
     /**
      * Creates new form TextEditor
      */
     public TextEditor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.control = new Controlador();
     }
 
     /**
@@ -127,14 +131,18 @@ public class TextEditor extends javax.swing.JDialog {
     }//GEN-LAST:event_guardarActionPerformed
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
+        
         fileTxtA.setBackground(Color.white);
         fileTxtA.setEnabled(true);
-        
+        control.crearArchivo("xd");
     }//GEN-LAST:event_crearActionPerformed
 
     private void abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirActionPerformed
         fileTxtA.setBackground(Color.white);
         fileTxtA.setEnabled(true);
+        // Seleccionar el archivo
+        String contenido = control.abrirArchivo();
+        fileTxtA.setText(contenido);
     }//GEN-LAST:event_abrirActionPerformed
 
     /**

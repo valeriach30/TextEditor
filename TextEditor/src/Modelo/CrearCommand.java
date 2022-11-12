@@ -20,7 +20,7 @@ public class CrearCommand extends BaseCommand {
     }       
     
     @Override
-    public void execute(ArrayList<String> args, OutputStream out) {
-        // falta implementar
+    public String execute(ArrayList<String> args, OutputStream out) {
+       return "Documento en blanco habilitado para el archivo";
     }
 }

@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Contorlador;
+package Controlador;
 
 import Modelo.Archivo;
 import Modelo.ArchivoCaretaker;
 import Modelo.CommandManager;
 import Modelo.ICommand;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -27,34 +28,38 @@ public class Controlador {
     public Controlador(){
     }
 
-    private void crearArchivo(String nombre) {
+    public void crearArchivo(String nombre) {
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(nombre);
         ICommand command = manager.getCommand("crear");   
         command.execute(commandArgs, System.out);        
     }
     
-    private void abrirArchivo() {
+    public String abrirArchivo() {
+        
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        ICommand command = manager.getCommand("abrir");   
+        String seleccion = command.execute(commandArgs, System.out); 
+        return seleccion;      
+    }
+    
+    public void guardarArchivo() {
         
     }
     
-    private void guardarArchivo() {
+    public void guardarComoArchivo() {
         
     }
     
-    private void guardarComoArchivo() {
+    public void resaltarArchivo() {
         
     }
     
-    private void resaltarArchivo() {
+    public void undo() {
         
     }
     
-    private void undo() {
-        
-    }
-    
-    private void redo() {
+    public void redo() {
         
     }
     

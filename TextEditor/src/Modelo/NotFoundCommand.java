@@ -16,7 +16,7 @@ public class NotFoundCommand extends BaseCommand {
     }       
     
     @Override       
-    public void execute(ArrayList<String> args, OutputStream out) {           
-        write(out, "Comando no encontrado");   
+    public String execute(ArrayList<String> args, OutputStream out) {           
+       return "Comando no encontrado";   
     }   
 }
