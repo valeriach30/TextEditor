@@ -38,7 +38,7 @@ public class AbrirCommand extends BaseCommand{
             try{
                 Scanner scanner = new Scanner(archivo);
                 while(scanner.hasNextLine()){
-                    contenido += "\n" + scanner.nextLine() + "\n";
+                    contenido += "\n" + scanner.nextLine();
                 }
                 return contenido;
             }
