@@ -20,6 +20,9 @@ public class Controlador {
     // archivo que cambiara
     Archivo archivo = new Archivo();
     
+    // archivo actual
+    Archivo copia = new Archivo();
+    
     // objeto con lista de mementos y métodos para obtenerlos
     private ArchivoCaretaker caretaker = new ArchivoCaretaker();
     
@@ -47,7 +50,7 @@ public class Controlador {
         String nombre = arrayArchivo.get(2);
         
         // Guardar archivo como el actual
-        this.archivo = new Archivo(contenido, nombre, direccion);
+        this.copia = new Archivo(contenido, nombre, direccion);
         return contenido;      
     }
     
@@ -55,7 +58,7 @@ public class Controlador {
         
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(nuevoContenido);
-        commandArgs.add(archivo.getDireccion());
+        commandArgs.add(copia.getDireccion());
         
         ICommand command = manager.getCommand("guardar");   
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
@@ -69,8 +72,28 @@ public class Controlador {
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
     }
     
-    public void resaltarArchivo() {
+    public String resaltarArchivo(String seleccion) {
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(copia.getDireccion());
+        commandArgs.add(seleccion);
         
+        // Agregar las palabras subrayadas del archivo
+        for (int i = 0; i < copia.getPalabrasSubrayadas().size(); i++) {
+             commandArgs.add(copia.getPalabrasSubrayadas().get(i));
+        }
+        
+        ICommand command = manager.getCommand("resaltar");   
+        ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
+        
+        // Obtener las nuevas palabras subrayadas
+        for (int i = 0; i < arrayArchivo.size() -1; i++) {
+            copia.agregarPalabraSubrayada(arrayArchivo.get(i));
+        }
+        
+        // El contenido del archivo va a ser el ultimo string del array 
+        // Se guarda para retornarlo despues
+        String contenido = arrayArchivo.get(arrayArchivo.size() - 1);
+        return contenido;
     }
     
     public void undo() {

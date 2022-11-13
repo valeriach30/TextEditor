@@ -180,72 +180,8 @@ public class TextEditor extends javax.swing.JDialog {
     private void resaltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resaltarActionPerformed
         
         String seleccionado = jEditorPane1.getSelectedText();
-        String contenidoFinal = "";
-        Archivo arch = control.getArchivo();
-        File archivo = new File(arch.getDireccion());
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader(arch.getDireccion()));
-            String line = reader.readLine();
-            while(line != null){
-                if(line.contains(seleccionado)){
-                    String[] palabras = line.split(" ");
-                    
-                    String temp = "";
-                    for (int i = 0; i < palabras.length; i++) {
-                        
-                        if(palabras[i].contains(seleccionado)){
-                            
-                            if(palabras[i].equals(seleccionado)){
-                                temp += "<font color=\"red\"> "+seleccionado+" </font>";
-                                arch.agregarPalabraSubrayada(seleccionado);
-                            }
-                            else{
-                                // Determinar si la palabra fue subrayada anteriormente
-                                if(estaSubrayada(palabras[i])){
-                                    temp += "<font color=\"red\"> "+palabras[i]+" </font>";
-                                }
-                                else{
-                                    temp += " " + palabras[i] + " ";
-                                }
-                            }
-                        }
-                        else{
-                            // Determinar si la palabra fue subrayada anteriormente
-                            if(estaSubrayada(palabras[i])){
-                                temp += "<font color=\"red\"> "+palabras[i]+" </font>";
-                            }
-                            else{
-                                temp += " " + palabras[i] + " ";
-                            }
-                        }
-                    }
-                    contenidoFinal += "<p> " + temp + " </p>";
-                }
-                else{
-                    String[] palabras2 = line.split(" ");
-                    
-                    String temp2 = "";
-                    for (int i = 0; i < palabras2.length; i++) {
-                        if(estaSubrayada(palabras2[i])){
-                            temp2 += "<font color=\"red\"> "+palabras2[i]+" </font>";
-                        }
-                        else{
-                            temp2 += " " + palabras2[i] + " ";
-                        }
-                    }
-                    contenidoFinal += "<p> " + temp2 + " </p>";
-                }
-                
-                // read next line
-                line = reader.readLine();
-            }
-            jEditorPane1.setText(contenidoFinal);
-            control.setArchivo(arch);
-        }
-        catch(FileNotFoundException e){
-        } catch (IOException ex) {
-            Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String contenidoFinal = control.resaltarArchivo(seleccionado);
+        jEditorPane1.setText(contenidoFinal);
     }//GEN-LAST:event_resaltarActionPerformed
 
     /**
@@ -290,14 +226,7 @@ public class TextEditor extends javax.swing.JDialog {
         });
     }
 
-    public Boolean estaSubrayada(String palabra){
-        Archivo arch = control.getArchivo();
-        ArrayList<String> palabrasSub = arch.getPalabrasSubrayadas();
-        if(palabrasSub.contains(palabra)){
-            return true;
-        }
-        return false;
-    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abrir;
