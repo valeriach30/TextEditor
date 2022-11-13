@@ -46,14 +46,16 @@ public class ResaltarCommand extends BaseCommand {
             BufferedReader reader = new BufferedReader(new FileReader(args.get(0)));
             String line = reader.readLine();
             while(line != null){
-                if(line.contains(seleccionado)){
+                if(line.contains(seleccionado) && seleccionado != ""){
                     String[] palabras = line.split(" ");
                     
                     String temp = "";
                     for (int i = 0; i < palabras.length; i++) {
                         
                         if(palabras[i].contains(seleccionado)){
-                            
+                            System.out.println("palabra de la lista: " + palabras[i]);
+                            System.out.println("palabra seleccionada: " + seleccionado);
+                            System.out.println("-----------------------------------------------");
                             if(palabras[i].equals(seleccionado)){
                                 temp += "<font color=\"red\"> "+seleccionado+" </font>";
                                 resultados.add(seleccionado);

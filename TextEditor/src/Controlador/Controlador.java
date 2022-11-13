@@ -23,6 +23,9 @@ public class Controlador {
     // archivo actual
     Archivo copia = new Archivo();
     
+    // array de archivos que se han abierto
+    ArrayList<Archivo> archivos = new ArrayList<Archivo>();
+    
     // objeto con lista de mementos y métodos para obtenerlos
     private ArchivoCaretaker caretaker = new ArchivoCaretaker();
     
@@ -49,8 +52,28 @@ public class Controlador {
         String direccion = arrayArchivo.get(1);
         String nombre = arrayArchivo.get(2);
         
+        Boolean archivoAgregado = false;
+        Archivo actual = null;
+        // Determinar si el archivo ya fue abierto
+        for (int i = 0; i < archivos.size(); i++) {
+            if(archivos.get(i).getNombre().equals(nombre)){
+                archivoAgregado = true;
+                actual = archivos.get(i);
+                this.copia = actual;
+                // el archivo ya fue abierto, entonces pueden haber palabras resaltadas
+                contenido = resaltarArchivo("");
+            }
+        }
+        
         // Guardar archivo como el actual
-        this.copia = new Archivo(contenido, nombre, direccion);
+        if(!archivoAgregado){
+            // Es un archivo nuevo, entonces se agrega a la lista
+            this.copia = new Archivo(contenido, nombre, direccion);
+            archivos.add(copia);
+        }
+        else{
+            this.copia = actual;
+        }
         return contenido;      
     }
     
