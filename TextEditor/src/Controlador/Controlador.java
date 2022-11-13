@@ -40,20 +40,33 @@ public class Controlador {
         ArrayList<String> commandArgs = new ArrayList<String>();
         ICommand command = manager.getCommand("abrir");   
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
+        
+        // Obtener la informacion del archivo abierto
         String contenido = arrayArchivo.get(0);
         String direccion = arrayArchivo.get(1);
         String nombre = arrayArchivo.get(2);
+        
+        // Guardar archivo como el actual
         this.archivo = new Archivo(contenido, nombre, direccion);
-        System.out.println(archivo.toString());
         return contenido;      
     }
     
-    public void guardarArchivo() {
+    public void guardarArchivo(String nuevoContenido) {
+        
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(nuevoContenido);
+        commandArgs.add(archivo.getDireccion());
+        
+        ICommand command = manager.getCommand("guardar");   
+        ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
         
     }
     
-    public void guardarComoArchivo() {
-        
+    public void guardarComoArchivo(String nuevoContenido) {
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(nuevoContenido);
+        ICommand command = manager.getCommand("guardar como");   
+        ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
     }
     
     public void resaltarArchivo() {
@@ -66,6 +79,14 @@ public class Controlador {
     
     public void redo() {
         
+    }
+
+    public Archivo getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(Archivo archivo) {
+        this.archivo = archivo;
     }
     
     

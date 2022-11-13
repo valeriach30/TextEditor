@@ -30,7 +30,7 @@ public class AbrirCommand extends BaseCommand{
         String contenido = "";
         
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Txt and Json Files", "txt", "json");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Txt and Json Files", "txt", "json", "tsv");
         chooser.setFileFilter(filter);
         
         int returnVal = chooser.showOpenDialog(null);
@@ -41,7 +41,7 @@ public class AbrirCommand extends BaseCommand{
             try{
                 Scanner scanner = new Scanner(archivo);
                 while(scanner.hasNextLine()){
-                    contenido += "\n" + scanner.nextLine();
+                    contenido += "<p>" + scanner.nextLine() + "</p>";
                 }
                 array.add(contenido);
                 array.add(chooser.getSelectedFile().getPath());

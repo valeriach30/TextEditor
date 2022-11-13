@@ -4,6 +4,9 @@
  */
 package Modelo;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
@@ -21,7 +24,18 @@ public class GuardarCommand extends BaseCommand {
     
     @Override
     public ArrayList<String> execute(ArrayList<String> args, OutputStream out) {
-        // falta implementar
-        return  "";
+        ArrayList<String> array = new ArrayList<String>();
+        
+        File fnew = new File(args.get(1));
+        try {
+            FileWriter f2 = new FileWriter(fnew, false);
+            f2.write(args.get(0));
+            f2.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }   
+        
+        return array;
     }
 }
