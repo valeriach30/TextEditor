@@ -53,9 +53,6 @@ public class ResaltarCommand extends BaseCommand {
                     for (int i = 0; i < palabras.length; i++) {
                         
                         if(palabras[i].contains(seleccionado)){
-                            System.out.println("palabra de la lista: " + palabras[i]);
-                            System.out.println("palabra seleccionada: " + seleccionado);
-                            System.out.println("-----------------------------------------------");
                             if(palabras[i].equals(seleccionado)){
                                 temp += "<font color=\"red\"> "+seleccionado+" </font>";
                                 resultados.add(seleccionado);
