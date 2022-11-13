@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author vchin
@@ -12,7 +14,8 @@ public class Archivo {
     private String contenido;       
     private String nombre;
     private String direccion;
-    
+    private ArrayList<String> palabrasSubrayadas = new ArrayList<String>();
+
     public Archivo(String contenido) {
         this.contenido = contenido;
     }
@@ -70,4 +73,15 @@ public class Archivo {
         this.direccion = direccion;
     }
 
+    public ArrayList<String> getPalabrasSubrayadas() {
+        return palabrasSubrayadas;
+    }
+
+    public void setPalabrasSubrayadas(ArrayList<String> palabrasSubrayadas) {
+        this.palabrasSubrayadas = palabrasSubrayadas;
+    }
+    
+    public void agregarPalabraSubrayada(String palabra){
+        this.palabrasSubrayadas.add(palabra);
+    }
 }
