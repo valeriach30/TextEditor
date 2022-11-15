@@ -31,6 +31,12 @@ public class Controlador {
     
     CommandManager manager = CommandManager.getIntance(); 
     
+    //guarda los los undo
+    ArrayList<String> undoes = new ArrayList<String>();
+    
+    //guarda los los redo
+    ArrayList<String> redoes = new ArrayList<String>();
+    
     public Controlador(){
     }
 
@@ -61,7 +67,7 @@ public class Controlador {
                 actual = archivos.get(i);
                 this.copia = actual;
                 // el archivo ya fue abierto, entonces pueden haber palabras resaltadas
-                contenido = resaltarArchivo("");
+                contenido = resaltarArchivo("","blue"); //problemente haya que cambiar el segundo parametro
             }
         }
         
@@ -95,10 +101,11 @@ public class Controlador {
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
     }
     
-    public String resaltarArchivo(String seleccion) {
+    public String resaltarArchivo(String seleccion,String color) {
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(copia.getDireccion());
         commandArgs.add(seleccion);
+        commandArgs.add(color);
         
         // Agregar las palabras subrayadas del archivo
         for (int i = 0; i < copia.getPalabrasSubrayadas().size(); i++) {
@@ -119,12 +126,70 @@ public class Controlador {
         return contenido;
     }
     
-    public void undo() {
+    public String undo() {
+        if(undoes.size() > 0){
+            String actualUndo = undoes.get(undoes.size() - 1);
+            addRedo(actualUndo); 
+
+            ArrayList<String> commandArgs = undoes;
+            ICommand command = manager.getCommand("undo");
+            undoes = command.execute(commandArgs, System.out); 
+
+            return actualUndo;
+        }
+        return "";
+    }
+    
+    public String redo() {
+        if(redoes.size() > 0){
+            String actualRedo= redoes.get(redoes.size() - 1);
+            addUndo(actualRedo); 
+
+            ArrayList<String> commandArgs = redoes;
+            ICommand command = manager.getCommand("redo");
+            redoes = command.execute(commandArgs, System.out); 
+
+            return actualRedo;
+        }
+        return "";
         
     }
     
-    public void redo() {
+    public int redoesSize(){
+        return redoes.size();
+    }
+    
+    public int undoesSize(){
+        return undoes.size();
+    }
+    
+    public void addUndo(String text){
+        if(undoes.size() >= 20){
+            corrimiento(undoes);
+            undoes.set(19, text);
+        }else{
+            undoes.add(text);
+        }
         
+    }
+    
+    public void addRedo(String text){
+        if(redoes.size() >= 20){
+            corrimiento(redoes);
+            redoes.set(19, text);
+        }else{
+            redoes.add(text);
+        }
+    }
+    
+    //srive para cuando el array de undoes y redoes este full elimine la ultima posicion
+    public void corrimiento(ArrayList<String> array){
+        String text;
+        for (int i = 0; i < array.size()-1; i++) {
+            text = array.get(i+1);
+            array.set(i, text);
+        }
+
     }
 
     public Archivo getArchivo() {

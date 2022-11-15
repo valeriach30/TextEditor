@@ -22,6 +22,7 @@ public class RedoCommand extends BaseCommand{
     @Override
     public ArrayList<String> execute(ArrayList<String> args, OutputStream out) {
         // falta implementar
-        return  "";
+        args.remove(args.size() - 1);
+        return  args;
     }
 }

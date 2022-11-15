@@ -36,6 +36,7 @@ public class ResaltarCommand extends BaseCommand {
         
         File archivo = new File(args.get(0));
         String seleccionado = args.get(1);
+        String color = args.get(2);
         
         // Obtener array con las palabras subrayadas
         for (int i = 2; i < args.size(); i++) {
@@ -54,13 +55,13 @@ public class ResaltarCommand extends BaseCommand {
                         
                         if(palabras[i].contains(seleccionado)){
                             if(palabras[i].equals(seleccionado)){
-                                temp += "<font color=\"red\"> "+seleccionado+" </font>";
+                                temp += "<font color=\""+color+"\"> "+seleccionado+" </font>";
                                 resultados.add(seleccionado);
                             }
                             else{
                                 // Determinar si la palabra fue subrayada anteriormente
                                 if(estaSubrayada(palabras[i], PalabrasSubrayadas)){
-                                    temp += "<font color=\"red\"> "+palabras[i]+" </font>";
+                                    temp += "<font color=\""+color+"\"> "+palabras[i]+" </font>";
                                 }
                                 else{
                                     temp += " " + palabras[i] + " ";
@@ -70,7 +71,7 @@ public class ResaltarCommand extends BaseCommand {
                         else{
                             // Determinar si la palabra fue subrayada anteriormente
                             if(estaSubrayada(palabras[i], PalabrasSubrayadas)){
-                                temp += "<font color=\"red\"> "+palabras[i]+" </font>";
+                                temp += "<font color=\""+color+"\"> "+palabras[i]+" </font>";
                             }
                             else{
                                 temp += " " + palabras[i] + " ";
@@ -85,7 +86,7 @@ public class ResaltarCommand extends BaseCommand {
                     String temp2 = "";
                     for (int i = 0; i < palabras2.length; i++) {
                         if(estaSubrayada(palabras2[i], PalabrasSubrayadas)){
-                            temp2 += "<font color=\"red\"> "+palabras2[i]+" </font>";
+                            temp2 += "<font color=\""+color+"\"> "+palabras2[i]+" </font>";
                         }
                         else{
                             temp2 += " " + palabras2[i] + " ";

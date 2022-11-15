@@ -28,7 +28,7 @@ import javax.swing.text.StyledDocument;
 public class TextEditor extends javax.swing.JDialog {
 
     Controlador control;
-    
+    String resaltadorColor = "red";
     
     /**
      * Creates new form TextEditor
@@ -53,6 +53,7 @@ public class TextEditor extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         redo = new javax.swing.JButton();
         undo = new javax.swing.JButton();
+        ButtonColorSelect = new javax.swing.JButton();
         resaltar = new javax.swing.JButton();
         guardarcomo = new javax.swing.JButton();
         guardar = new javax.swing.JButton();
@@ -76,8 +77,22 @@ public class TextEditor extends javax.swing.JDialog {
 
         undo.setBackground(new java.awt.Color(255, 255, 255));
         undo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/undo.jpeg"))); // NOI18N
+        undo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoActionPerformed(evt);
+            }
+        });
         jPanel1.add(undo);
         undo.setBounds(470, 10, 75, 60);
+
+        ButtonColorSelect.setBackground(new java.awt.Color(255, 0, 0));
+        ButtonColorSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonColorSelectActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ButtonColorSelect);
+        ButtonColorSelect.setBounds(430, 60, 30, 20);
 
         resaltar.setBackground(new java.awt.Color(255, 255, 255));
         resaltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/highlight.png"))); // NOI18N
@@ -129,6 +144,11 @@ public class TextEditor extends javax.swing.JDialog {
         jPanel1.add(crear);
         crear.setBounds(10, 10, 70, 60);
 
+        jEditorPane1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jEditorPane1KeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(jEditorPane1);
 
         jPanel1.add(jScrollPane1);
@@ -178,11 +198,47 @@ public class TextEditor extends javax.swing.JDialog {
     }//GEN-LAST:event_guardarcomoActionPerformed
 
     private void resaltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resaltarActionPerformed
+        //jEditorPane1.replaceSelection("hola");
+        //String seleccionado = jEditorPane1.getSelectedText();
+        //jEditorPane1.replaceSelection("<font color=\"red\">hola</font>");
+
         
         String seleccionado = jEditorPane1.getSelectedText();
-        String contenidoFinal = control.resaltarArchivo(seleccionado);
+        String contenidoFinal = control.resaltarArchivo(seleccionado,resaltadorColor);
         jEditorPane1.setText(contenidoFinal);
     }//GEN-LAST:event_resaltarActionPerformed
+
+    private void jEditorPane1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jEditorPane1KeyTyped
+        
+        String text = jEditorPane1.getText();
+        control.addUndo(text);
+    }//GEN-LAST:event_jEditorPane1KeyTyped
+
+    private void undoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoActionPerformed
+        if(control.undoesSize()>0){ //esta validacion es para evitar texto en blanco
+            String text = control.undo();
+            jEditorPane1.setText(text);
+        }
+        
+    }//GEN-LAST:event_undoActionPerformed
+
+    public void setResaltadorColor(String resaltadorColor){
+        this.resaltadorColor = resaltadorColor;
+        if(resaltadorColor=="red")
+            ButtonColorSelect.setBackground(Color.red);
+        else if(resaltadorColor=="green")
+            ButtonColorSelect.setBackground(Color.green);
+        else if(resaltadorColor=="yellow")
+            ButtonColorSelect.setBackground(Color.yellow);
+        else if(resaltadorColor=="blue")
+            ButtonColorSelect.setBackground(Color.blue);
+    
+    }
+    
+    private void ButtonColorSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonColorSelectActionPerformed
+        Colores colores = new Colores(this,true);
+        colores.setVisible(true);
+    }//GEN-LAST:event_ButtonColorSelectActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,6 +285,7 @@ public class TextEditor extends javax.swing.JDialog {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonColorSelect;
     private javax.swing.JButton abrir;
     private javax.swing.JButton crear;
     private javax.swing.JButton guardar;
