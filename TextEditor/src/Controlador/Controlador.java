@@ -142,16 +142,27 @@ public class Controlador {
     
     public String redo() {
         if(redoes.size() > 0){
+            //System.out.println(undoes.toString());
             String actualRedo= redoes.get(redoes.size() - 1);
             addUndo(actualRedo); 
 
             ArrayList<String> commandArgs = redoes;
             ICommand command = manager.getCommand("redo");
             redoes = command.execute(commandArgs, System.out); 
-
+            
+            //.out.println(undoes.toString());
             return actualRedo;
         }
         return "";
+        
+    }
+    public void resetRedo(){
+        redoes = new ArrayList<String>();
+        
+    }
+    
+    public void resetUndo(){
+        undoes = new ArrayList<String>();
         
     }
     
@@ -171,6 +182,15 @@ public class Controlador {
             undoes.add(text);
         }
         
+    }
+    
+    public void addUndoLast(String text){
+        if(undoes.size() == 0){
+            undoes.add("");
+            undoes.add(text);
+        }else{
+            undoes.set(undoesSize() - 1, text);
+        }
     }
     
     public void addRedo(String text){

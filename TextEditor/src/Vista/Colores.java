@@ -16,13 +16,13 @@ public class Colores extends javax.swing.JDialog {
      */
     TextEditor textEditor;
     
-    public Colores(java.awt.Dialog parent, boolean modal ) {
+    public Colores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         textEditor = (TextEditor)parent;
         initComponents();
     }
     
-    public Colores(java.awt.Frame parent, boolean modal) {
+    public Colores(java.awt.Frame parent, boolean modal, boolean forNothing) {
         super(parent, modal);
         //this.textEditor = textEditor;
         initComponents();
@@ -164,7 +164,7 @@ public class Colores extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Colores dialog = new Colores(new javax.swing.JFrame(), true);
+                Colores dialog = new Colores(new javax.swing.JFrame(), true,true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

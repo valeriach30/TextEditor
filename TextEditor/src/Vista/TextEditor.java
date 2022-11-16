@@ -25,7 +25,7 @@ import javax.swing.text.StyledDocument;
  *
  * @author vchin
  */
-public class TextEditor extends javax.swing.JDialog {
+public class TextEditor extends javax.swing.JFrame {
 
     Controlador control;
     String resaltadorColor = "red";
@@ -33,8 +33,8 @@ public class TextEditor extends javax.swing.JDialog {
     /**
      * Creates new form TextEditor
      */
-    public TextEditor(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public TextEditor() {
+        //super(parent, modal);
         initComponents();
         jEditorPane1.setContentType("text/html");
         this.control = new Controlador();
@@ -72,6 +72,11 @@ public class TextEditor extends javax.swing.JDialog {
 
         redo.setBackground(new java.awt.Color(255, 255, 255));
         redo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/redo.jpeg"))); // NOI18N
+        redo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redoActionPerformed(evt);
+            }
+        });
         jPanel1.add(redo);
         redo.setBounds(560, 10, 75, 60);
 
@@ -209,13 +214,40 @@ public class TextEditor extends javax.swing.JDialog {
     }//GEN-LAST:event_resaltarActionPerformed
 
     private void jEditorPane1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jEditorPane1KeyTyped
+        int keyInt = (int)evt.getKeyChar();
+        //System.out.println(keyInt);
         
-        String text = jEditorPane1.getText();
-        control.addUndo(text);
+        //del es 8, intro 10, Ctrl V 22,  espacio 32 y suprimir 127
+        //esto se hace para no hacer tantos undo inutiles
+        
+        if(keyInt == 8|| keyInt == 10 ||keyInt == 22 ||keyInt == 32 || keyInt == 127){
+            
+            control.resetRedo();
+            
+            if(control.undoesSize() == 0)
+                control.addUndo("");
+                
+            //System.out.println("si soy");
+        
+            String text = jEditorPane1.getText();
+            control.addUndo(text);
+        //}else if(keyInt == 24){// Ctrl X 24 
+            
+        
+        }else{ //cambia la ultima posicion
+            control.resetRedo();
+            
+            String text = jEditorPane1.getText();
+            control.addUndoLast(text);
+        }
+        
     }//GEN-LAST:event_jEditorPane1KeyTyped
 
     private void undoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoActionPerformed
         if(control.undoesSize()>0){ //esta validacion es para evitar texto en blanco
+            
+            control.addRedo(jEditorPane1.getText());
+            
             String text = control.undo();
             jEditorPane1.setText(text);
         }
@@ -239,6 +271,16 @@ public class TextEditor extends javax.swing.JDialog {
         Colores colores = new Colores(this,true);
         colores.setVisible(true);
     }//GEN-LAST:event_ButtonColorSelectActionPerformed
+
+    private void redoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoActionPerformed
+        if(control.redoesSize()>0){ //esta validacion es para evitar texto en blanco
+            //control.addUndo(jEditorPane1.getText());
+            
+            String text = control.redo();
+            jEditorPane1.setText(text);
+        }
+        
+    }//GEN-LAST:event_redoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,7 +312,7 @@ public class TextEditor extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TextEditor dialog = new TextEditor(new javax.swing.JFrame(), true);
+                TextEditor dialog = new TextEditor();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
