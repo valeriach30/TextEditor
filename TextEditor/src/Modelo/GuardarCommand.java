@@ -27,6 +27,7 @@ public class GuardarCommand extends BaseCommand {
         ArrayList<String> array = new ArrayList<String>();
         
         File fnew = new File(args.get(1));
+        //System.out.println(args.get(0));
         try {
             FileWriter f2 = new FileWriter(fnew, false);
             f2.write(args.get(0));

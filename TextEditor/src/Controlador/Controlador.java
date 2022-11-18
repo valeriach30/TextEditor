@@ -108,6 +108,7 @@ public class Controlador {
     public boolean guardarComoArchivo(String nuevoContenido) {
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(nuevoContenido);
+        System.out.println(nuevoContenido);
         ICommand command = manager.getCommand("guardar como");   
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
         if(arrayArchivo == null)

@@ -6,7 +6,12 @@ package Vista;
 
 import java.awt.Color;
 import Controlador.Controlador;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -161,7 +166,13 @@ public class TextEditor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        String contenido = jEditorPane1.getText();
+        String contenido = ""; //= jEditorPane1.getText();
+        try {
+            contenido = jEditorPane1.getDocument().getText( 0 , jEditorPane1.getDocument().getLength());
+        } catch (BadLocationException ex) {
+            Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         boolean seGuardo = control.guardarArchivo(contenido);
         if(seGuardo)
             JOptionPane.showMessageDialog(null, "Archivo Guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -185,7 +196,13 @@ public class TextEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_abrirActionPerformed
 
     private void guardarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarcomoActionPerformed
-        String contenido = jEditorPane1.getText();
+        String contenido = ""; //= jEditorPane1.getText();
+        try {
+            contenido = jEditorPane1.getDocument().getText( 0 , jEditorPane1.getDocument().getLength());
+        } catch (BadLocationException ex) {
+            Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         boolean seCreo = control.guardarComoArchivo(contenido);
         if(seCreo)
             JOptionPane.showMessageDialog(null, "Archivo Guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -196,10 +213,14 @@ public class TextEditor extends javax.swing.JFrame {
         //String seleccionado = jEditorPane1.getSelectedText();
         //jEditorPane1.replaceSelection("<font color=\"red\">hola</font>");
 
-        
+        try{ 
         String seleccionado = jEditorPane1.getSelectedText();
         String contenidoFinal = control.resaltarArchivo(seleccionado,resaltadorColor);
         jEditorPane1.setText(contenidoFinal);
+        
+        }catch(NullPointerException e){
+            
+        }
     }//GEN-LAST:event_resaltarActionPerformed
 
     private void jEditorPane1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jEditorPane1KeyTyped

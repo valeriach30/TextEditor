@@ -50,6 +50,8 @@ public class GuardarComoCommand extends BaseCommand {
             //selecciona la extension del archivo  
             String formato = "."+(((FileNameExtensionFilter) chooser.getFileFilter()).getExtensions()) [0];
             
+            //System.out.println(args.get(0));
+            
             File archivo = chooser.getSelectedFile();
             try {
                 FileWriter writer = new FileWriter(archivo + formato);
