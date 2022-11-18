@@ -31,13 +31,7 @@ public class Controlador {
     private ArchivoCaretaker caretaker = new ArchivoCaretaker();
     
     CommandManager manager = CommandManager.getIntance(); 
-    
-    //guarda los los undo
-    ArrayList<String> undoes = new ArrayList<String>();
-    
-    //guarda los los redo
-    ArrayList<String> redoes = new ArrayList<String>();
-    
+
     ArchivoCaretaker archivosRedos = new ArchivoCaretaker();
     
     public Controlador(){
@@ -52,6 +46,7 @@ public class Controlador {
     
     public String abrirArchivo() {
         
+
         ArrayList<String> commandArgs = new ArrayList<String>();
         ICommand command = manager.getCommand("abrir");   
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out);         
@@ -84,6 +79,11 @@ public class Controlador {
             else{
                 this.copia = actual;
             }
+            //resetea los undo
+            archivosRedos =  new ArchivoCaretaker();
+            copia.setContenido(contenido);
+            archivosRedos.addNewMemento( copia.createMemento());
+            
             return contenido;  
         }
        return "";
