@@ -232,31 +232,20 @@ public class TextEditor extends javax.swing.JFrame {
         
         if(keyInt == 8|| keyInt == 10 ||keyInt == 22 ||keyInt == 32 || keyInt == 127){
             
-            //control.resetRedo();
-            
-            //if(control.undoesSize() == 0)
-                //control.addUndo("");
-                
-            //System.out.println("si soy");
+            control.resetRedo();
         
             String text = jEditorPane1.getText();
             control.addUndo(text);
-        //}else if(keyInt == 24){// Ctrl X 24 
             
         
         }else{ //cambia la ultima posicion
             control.resetRedo();
-            
-            String text = jEditorPane1.getText();
-            control.addUndoLast(text);
         }
         
     }//GEN-LAST:event_jEditorPane1KeyTyped
 
     private void undoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoActionPerformed
-        //if(control.undoesSize()>0){ //esta validacion es para evitar texto en blanco
-            
-            //control.addRedo(jEditorPane1.getText());
+
             try {
                 String text = control.undo();
                 jEditorPane1.setText(text);
@@ -264,8 +253,6 @@ public class TextEditor extends javax.swing.JFrame {
             } catch (NullPointerException e) {
         }
             
-        //}
-        
     }//GEN-LAST:event_undoActionPerformed
 
     public void setResaltadorColor(String resaltadorColor){
@@ -287,13 +274,13 @@ public class TextEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonColorSelectActionPerformed
 
     private void redoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoActionPerformed
-        if(control.redoesSize()>0){ //esta validacion es para evitar texto en blanco
-            //control.addUndo(jEditorPane1.getText());
-            
+              
+            try {
             String text = control.redo();
             jEditorPane1.setText(text);
+        } catch (NullPointerException e) {
         }
-        
+   
     }//GEN-LAST:event_redoActionPerformed
 
     /**

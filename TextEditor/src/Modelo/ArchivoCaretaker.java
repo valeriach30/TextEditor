@@ -50,5 +50,11 @@ public class ArchivoCaretaker {
     public int getCurrentIndex() {
         return currentIndex;
     }
-        
+    public void deleteNextsMementos(){
+        for (int i = currentIndex + 1 ; i < states.size(); i++) {
+            states.remove( states.size()-1 );
+            
+        }
+    
+    }    
 }

@@ -150,60 +150,20 @@ public class Controlador {
     }
     
     public String undo() {
-        //if(undoes.size() > 0){
-            //String actualUndo = undoes.get(undoes.size() - 1);
-            //addRedo(actualUndo); 
-            //copia.createMemento();
 
-            //ArrayList<String> commandArgs = undoes;
-            //ICommand command = manager.getCommand("undo");
-            //undoes = command.execute(commandArgs, System.out); 
-            //copia.restoreMemento(archivoMementos.get(archivoMementos.size()-1));
-           // archivosRedos.getPreviousMemento().getMemento().getContenido();
+        String retornado = archivosRedos.getPreviousMemento().getMemento().getContenido();
+        return retornado;
 
-            String retornado = archivosRedos.getPreviousMemento().getMemento().getContenido();
-            return retornado;
-
-            //comando
-            //archivoMementos.remove(archivoMementos.size()-1);
-            
-            
-        //}
-        //return "";
     }
     
     public String redo() {
-        if(redoes.size() > 0){
-            //System.out.println(undoes.toString());
-            String actualRedo= redoes.get(redoes.size() - 1);
-            addUndo(actualRedo); 
-
-            ArrayList<String> commandArgs = redoes;
-            ICommand command = manager.getCommand("redo");
-            redoes = command.execute(commandArgs, System.out); 
-            
-            //.out.println(undoes.toString());
-            return actualRedo;
-        }
-        return "";
-        
+ 
+        String retornado = archivosRedos.getNextMemento().getMemento().getContenido();
+        return retornado;
     }
     public void resetRedo(){
-        redoes = new ArrayList<String>();
+        archivosRedos.deleteNextsMementos();
         
-    }
-    
-    public void resetUndo(){
-        undoes = new ArrayList<String>();
-        
-    }
-    
-    public int redoesSize(){
-        return redoes.size();
-    }
-    
-    public int undoesSize(){
-        return undoes.size();
     }
     
     public void addUndo(String text){
@@ -214,43 +174,8 @@ public class Controlador {
             
         copia.setContenido(text);
         archivosRedos.addNewMemento( copia.createMemento());
-        /*
-        if(undoes.size() >= 20){
-            corrimiento(undoes);
-            undoes.set(19, text);
-        }else{
-            undoes.add(text);
-        }
-        */
     }
     
-    public void addUndoLast(String text){
-        if(undoes.size() == 0){
-            undoes.add("");
-            undoes.add(text);
-        }else{
-            undoes.set(undoesSize() - 1, text);
-        }
-    }
-    
-    public void addRedo(String text){
-        if(redoes.size() >= 20){
-            corrimiento(redoes);
-            redoes.set(19, text);
-        }else{
-            redoes.add(text);
-        }
-    }
-    
-    //srive para cuando el array de undoes y redoes este full elimine la ultima posicion
-    public void corrimiento(ArrayList<String> array){
-        String text;
-        for (int i = 0; i < array.size()-1; i++) {
-            text = array.get(i+1);
-            array.set(i, text);
-        }
-
-    }
 
     public Archivo getArchivo() {
         return archivo;
