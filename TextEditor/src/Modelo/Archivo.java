@@ -15,6 +15,7 @@ public class Archivo {
     private String nombre;
     private String direccion;
     private ArrayList<String> palabrasSubrayadas = new ArrayList<String>();
+    private ArrayList<String> colores = new ArrayList<String>();
 
     public Archivo(String contenido) {
         this.contenido = contenido;
@@ -83,5 +84,17 @@ public class Archivo {
     
     public void agregarPalabraSubrayada(String palabra){
         this.palabrasSubrayadas.add(palabra);
+    }
+
+    public void setColores(ArrayList<String> colores) {
+        this.colores = colores;
+    }
+
+    public ArrayList<String> getColores() {
+        return colores;
+    }
+    
+    public void agregarColor(String color){
+        this.colores.add(color);
     }
 }

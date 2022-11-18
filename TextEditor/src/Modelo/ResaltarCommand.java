@@ -33,16 +33,20 @@ public class ResaltarCommand extends BaseCommand {
         String contenidoFinal = "";
         ArrayList<String> PalabrasSubrayadas = new ArrayList<String>();
         ArrayList<String> resultados = new ArrayList<String>();
-        
+        ArrayList<String> colores = new ArrayList<String>();
         //File archivo = new File(args.get(0));
         String seleccionado = args.get(1);
         String color = args.get(2);
-        
         // Obtener array con las palabras subrayadas
         for (int i = 2; i < args.size(); i++) {
-            PalabrasSubrayadas.add(args.get(i));
+            if(args.get(i) != "red" && args.get(i) != "blue"
+            && args.get(i) != "yellow" && args.get(i) != "green"){
+               PalabrasSubrayadas.add(args.get(i));
+            }
+            else{
+                colores.add(args.get(i));
+            }
         }
-        
         try{
             BufferedReader reader = new BufferedReader(new FileReader(args.get(0)));
             String line = reader.readLine();
@@ -61,7 +65,9 @@ public class ResaltarCommand extends BaseCommand {
                             else{
                                 // Determinar si la palabra fue subrayada anteriormente
                                 if(estaSubrayada(palabras[i], PalabrasSubrayadas)){
-                                    temp += "<font color=\""+color+"\"> "+palabras[i]+" </font>";
+                                    int indice = obtenerIndice(palabras[i], PalabrasSubrayadas);
+                                    String colorPalabra = colores.get(indice);
+                                    temp += "<font color=\""+colorPalabra+"\"> "+palabras[i]+" </font>";
                                 }
                                 else{
                                     temp += " " + palabras[i] + " ";
@@ -71,7 +77,9 @@ public class ResaltarCommand extends BaseCommand {
                         else{
                             // Determinar si la palabra fue subrayada anteriormente
                             if(estaSubrayada(palabras[i], PalabrasSubrayadas)){
-                                temp += "<font color=\""+color+"\"> "+palabras[i]+" </font>";
+                                int indice = obtenerIndice(palabras[i], PalabrasSubrayadas);
+                                String colorPalabra = colores.get(indice);
+                                temp += "<font color=\""+colorPalabra+"\"> "+palabras[i]+" </font>";
                             }
                             else{
                                 temp += " " + palabras[i] + " ";
@@ -82,11 +90,12 @@ public class ResaltarCommand extends BaseCommand {
                 }
                 else{
                     String[] palabras2 = line.split(" ");
-                    
                     String temp2 = "";
                     for (int i = 0; i < palabras2.length; i++) {
                         if(estaSubrayada(palabras2[i], PalabrasSubrayadas)){
-                            temp2 += "<font color=\""+color+"\"> "+palabras2[i]+" </font>";
+                            int indice = obtenerIndice(palabras2[i], PalabrasSubrayadas);
+                            String colorPalabra = colores.get(indice);
+                            temp2 += "<font color=\""+colorPalabra+"\"> "+palabras2[i]+" </font>";
                         }
                         else{
                             temp2 += " " + palabras2[i] + " ";
@@ -112,5 +121,14 @@ public class ResaltarCommand extends BaseCommand {
             return true;
         }
         return false;
+    }
+    
+    public int obtenerIndice(String palabra, ArrayList<String> PalabrasSubrayadas){
+        for (int i = 0; i < PalabrasSubrayadas.size(); i++) {
+            if(PalabrasSubrayadas.get(i).equals(palabra)){
+                return i+1;
+            }
+        }
+        return -1;
     }
 }

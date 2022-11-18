@@ -118,6 +118,7 @@ public class Controlador {
     
     public String resaltarArchivo(String seleccion,String color) {
         ArrayList<String> commandArgs = new ArrayList<String>();
+        
         commandArgs.add(copia.getDireccion());
         commandArgs.add(seleccion);
         commandArgs.add(color);
@@ -127,14 +128,18 @@ public class Controlador {
              commandArgs.add(copia.getPalabrasSubrayadas().get(i));
         }
         
+        // Agregar los colores
+        for (int i = 0; i < copia.getColores().size(); i++) {
+             commandArgs.add(copia.getColores().get(i));
+        }
         ICommand command = manager.getCommand("resaltar");   
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
         
         // Obtener las nuevas palabras subrayadas
-        for (int i = 0; i < arrayArchivo.size() -1; i++) {
+        for (int i = 0; i < arrayArchivo.size() - copia.getColores().size(); i++) {
             copia.agregarPalabraSubrayada(arrayArchivo.get(i));
+            copia.agregarColor(color);
         }
-        
         // El contenido del archivo va a ser el ultimo string del array 
         // Se guarda para retornarlo despues
         String contenido = arrayArchivo.get(arrayArchivo.size() - 1);
