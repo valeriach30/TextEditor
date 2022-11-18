@@ -232,10 +232,10 @@ public class TextEditor extends javax.swing.JFrame {
         
         if(keyInt == 8|| keyInt == 10 ||keyInt == 22 ||keyInt == 32 || keyInt == 127){
             
-            control.resetRedo();
+            //control.resetRedo();
             
-            if(control.undoesSize() == 0)
-                control.addUndo("");
+            //if(control.undoesSize() == 0)
+                //control.addUndo("");
                 
             //System.out.println("si soy");
         
@@ -254,13 +254,17 @@ public class TextEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jEditorPane1KeyTyped
 
     private void undoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoActionPerformed
-        if(control.undoesSize()>0){ //esta validacion es para evitar texto en blanco
+        //if(control.undoesSize()>0){ //esta validacion es para evitar texto en blanco
             
-            control.addRedo(jEditorPane1.getText());
+            //control.addRedo(jEditorPane1.getText());
+            try {
+                String text = control.undo();
+                jEditorPane1.setText(text);
             
-            String text = control.undo();
-            jEditorPane1.setText(text);
+            } catch (NullPointerException e) {
         }
+            
+        //}
         
     }//GEN-LAST:event_undoActionPerformed
 

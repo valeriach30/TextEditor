@@ -6,6 +6,7 @@ package Controlador;
 
 import Modelo.Archivo;
 import Modelo.ArchivoCaretaker;
+import Modelo.ArchivoMemento;
 import Modelo.CommandManager;
 import Modelo.ICommand;
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class Controlador {
     
     //guarda los los redo
     ArrayList<String> redoes = new ArrayList<String>();
+    
+    ArchivoCaretaker archivosRedos = new ArchivoCaretaker();
     
     public Controlador(){
     }
@@ -142,17 +145,26 @@ public class Controlador {
     }
     
     public String undo() {
-        if(undoes.size() > 0){
-            String actualUndo = undoes.get(undoes.size() - 1);
-            addRedo(actualUndo); 
+        //if(undoes.size() > 0){
+            //String actualUndo = undoes.get(undoes.size() - 1);
+            //addRedo(actualUndo); 
+            //copia.createMemento();
 
-            ArrayList<String> commandArgs = undoes;
-            ICommand command = manager.getCommand("undo");
-            undoes = command.execute(commandArgs, System.out); 
+            //ArrayList<String> commandArgs = undoes;
+            //ICommand command = manager.getCommand("undo");
+            //undoes = command.execute(commandArgs, System.out); 
+            //copia.restoreMemento(archivoMementos.get(archivoMementos.size()-1));
+           // archivosRedos.getPreviousMemento().getMemento().getContenido();
 
-            return actualUndo;
-        }
-        return "";
+            String retornado = archivosRedos.getPreviousMemento().getMemento().getContenido();
+            return retornado;
+
+            //comando
+            //archivoMementos.remove(archivoMementos.size()-1);
+            
+            
+        //}
+        //return "";
     }
     
     public String redo() {
@@ -190,13 +202,21 @@ public class Controlador {
     }
     
     public void addUndo(String text){
+        if(archivosRedos.getCurrentIndex()==-1){
+            copia.setContenido("");
+            archivosRedos.addNewMemento( copia.createMemento());
+        }
+            
+        copia.setContenido(text);
+        archivosRedos.addNewMemento( copia.createMemento());
+        /*
         if(undoes.size() >= 20){
             corrimiento(undoes);
             undoes.set(19, text);
         }else{
             undoes.add(text);
         }
-        
+        */
     }
     
     public void addUndoLast(String text){

@@ -46,4 +46,9 @@ public class ArchivoCaretaker {
         
         return states.get(currentIndex);       
     }
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+        
 }

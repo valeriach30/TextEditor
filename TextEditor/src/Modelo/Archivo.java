@@ -36,9 +36,14 @@ public class Archivo {
         try {               
             return new ArchivoMemento((Archivo)this.clone());           
         } catch (Exception e) {               
-            throw new RuntimeException("Error al clonar el empleado");           
+            throw new RuntimeException("Error al clonar el archivo");           
         }       
-    }              
+    }
+    
+    public Archivo clone(){
+        
+        return new Archivo(contenido, nombre, direccion);
+    }
     
     // obtiene el memento y lo restaura en su estado
     // uno a uno los valores del estado
