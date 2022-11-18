@@ -212,10 +212,10 @@ public class TextEditor extends javax.swing.JFrame {
         //jEditorPane1.replaceSelection("hola");
         //String seleccionado = jEditorPane1.getSelectedText();
         //jEditorPane1.replaceSelection("<font color=\"red\">hola</font>");
-
         try{ 
         String seleccionado = jEditorPane1.getSelectedText();
         String contenidoFinal = control.resaltarArchivo(seleccionado,resaltadorColor);
+        System.out.println(contenidoFinal);
         jEditorPane1.setText(contenidoFinal);
         
         }catch(NullPointerException e){
