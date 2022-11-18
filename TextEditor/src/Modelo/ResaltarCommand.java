@@ -34,7 +34,7 @@ public class ResaltarCommand extends BaseCommand {
         ArrayList<String> PalabrasSubrayadas = new ArrayList<String>();
         ArrayList<String> resultados = new ArrayList<String>();
         
-        File archivo = new File(args.get(0));
+        //File archivo = new File(args.get(0));
         String seleccionado = args.get(1);
         String color = args.get(2);
         

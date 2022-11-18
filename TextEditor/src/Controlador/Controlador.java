@@ -51,54 +51,68 @@ public class Controlador {
         
         ArrayList<String> commandArgs = new ArrayList<String>();
         ICommand command = manager.getCommand("abrir");   
-        ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
+        ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out);         
         
-        // Obtener la informacion del archivo abierto
-        String contenido = arrayArchivo.get(0);
-        String direccion = arrayArchivo.get(1);
-        String nombre = arrayArchivo.get(2);
-        
-        Boolean archivoAgregado = false;
-        Archivo actual = null;
-        // Determinar si el archivo ya fue abierto
-        for (int i = 0; i < archivos.size(); i++) {
-            if(archivos.get(i).getNombre().equals(nombre)){
-                archivoAgregado = true;
-                actual = archivos.get(i);
-                this.copia = actual;
-                // el archivo ya fue abierto, entonces pueden haber palabras resaltadas
-                contenido = resaltarArchivo("","blue"); //problemente haya que cambiar el segundo parametro
+        if(arrayArchivo != null){
+            // Obtener la informacion del archivo abierto
+            String contenido = arrayArchivo.get(0);
+            String direccion = arrayArchivo.get(1);
+            String nombre = arrayArchivo.get(2);
+
+            Boolean archivoAgregado = false;
+            Archivo actual = null;
+            // Determinar si el archivo ya fue abierto
+            for (int i = 0; i < archivos.size(); i++) {
+                if(archivos.get(i).getNombre().equals(nombre)){
+                    archivoAgregado = true;
+                    actual = archivos.get(i);
+                    this.copia = actual;
+                    // el archivo ya fue abierto, entonces pueden haber palabras resaltadas
+                    contenido = resaltarArchivo("","blue"); //problemente haya que cambiar el segundo parametro(color)
+                }
             }
+
+            // Guardar archivo como el actual
+            if(!archivoAgregado){
+                // Es un archivo nuevo, entonces se agrega a la lista
+                this.copia = new Archivo(contenido, nombre, direccion);
+                archivos.add(copia);
+            }
+            else{
+                this.copia = actual;
+            }
+            return contenido;  
         }
-        
-        // Guardar archivo como el actual
-        if(!archivoAgregado){
-            // Es un archivo nuevo, entonces se agrega a la lista
-            this.copia = new Archivo(contenido, nombre, direccion);
-            archivos.add(copia);
-        }
-        else{
-            this.copia = actual;
-        }
-        return contenido;      
+       return "";
+            
     }
     
-    public void guardarArchivo(String nuevoContenido) {
+    public boolean guardarArchivo(String nuevoContenido) {
+        
+        if(copia.getDireccion() == null){
+            return guardarComoArchivo(nuevoContenido);
+        }
         
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(nuevoContenido);
         commandArgs.add(copia.getDireccion());
         
+        
         ICommand command = manager.getCommand("guardar");   
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
         
+        return true;
+        
     }
     
-    public void guardarComoArchivo(String nuevoContenido) {
+    public boolean guardarComoArchivo(String nuevoContenido) {
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(nuevoContenido);
         ICommand command = manager.getCommand("guardar como");   
         ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
+        if(arrayArchivo == null)
+            return false;//no se creo el archivo
+        return true;
     }
     
     public String resaltarArchivo(String seleccion,String color) {

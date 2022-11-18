@@ -5,6 +5,7 @@
 package Modelo;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -28,11 +29,19 @@ public class AbrirCommand extends BaseCommand{
     public ArrayList<String>  execute(ArrayList<String> args, OutputStream out) {
         ArrayList<String> array = new ArrayList<String>();
         String contenido = "";
-        
+
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Txt and Json Files", "txt", "json", "tsv");
-        chooser.setFileFilter(filter);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Txt", "txt", "tsv");
+        chooser.addChoosableFileFilter(filter);
         
+        filter = new FileNameExtensionFilter("Txt por tabulaciones", "txt", "tsv");
+        chooser.addChoosableFileFilter(filter);
+        
+        filter = new FileNameExtensionFilter("Json", "json", "tsv");
+        chooser.addChoosableFileFilter(filter);
+        //chooser.setFileFilter(filter);
+        
+
         int returnVal = chooser.showOpenDialog(null);
         
         if(returnVal == JFileChooser.APPROVE_OPTION) {
@@ -55,5 +64,6 @@ public class AbrirCommand extends BaseCommand{
         } 
         return null;
     }
+    
 }
  

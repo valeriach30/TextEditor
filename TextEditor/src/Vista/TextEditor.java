@@ -6,21 +6,8 @@ package Vista;
 
 import java.awt.Color;
 import Controlador.Controlador;
-import Modelo.Archivo;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+
 /**
  *
  * @author vchin
@@ -28,7 +15,7 @@ import javax.swing.text.StyledDocument;
 public class TextEditor extends javax.swing.JFrame {
 
     Controlador control;
-    String resaltadorColor = "red";
+    String resaltadorColor = "red";//se setea por default el color rojo
     
     /**
      * Creates new form TextEditor
@@ -175,8 +162,9 @@ public class TextEditor extends javax.swing.JFrame {
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         String contenido = jEditorPane1.getText();
-        control.guardarArchivo(contenido);
-        JOptionPane.showMessageDialog(null, "Archivo Guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
+        boolean seGuardo = control.guardarArchivo(contenido);
+        if(seGuardo)
+            JOptionPane.showMessageDialog(null, "Archivo Guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
                         
     }//GEN-LAST:event_guardarActionPerformed
 
@@ -198,8 +186,9 @@ public class TextEditor extends javax.swing.JFrame {
 
     private void guardarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarcomoActionPerformed
         String contenido = jEditorPane1.getText();
-        control.guardarComoArchivo(contenido);
-        JOptionPane.showMessageDialog(null, "Archivo Guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
+        boolean seCreo = control.guardarComoArchivo(contenido);
+        if(seCreo)
+            JOptionPane.showMessageDialog(null, "Archivo Guardado", "Info", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_guardarcomoActionPerformed
 
     private void resaltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resaltarActionPerformed
