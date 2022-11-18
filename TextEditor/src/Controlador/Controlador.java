@@ -9,6 +9,8 @@ import Modelo.ArchivoCaretaker;
 import Modelo.ArchivoMemento;
 import Modelo.CommandManager;
 import Modelo.ICommand;
+import Modelo.RedoCommand;
+import Modelo.UndoCommand;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 
@@ -32,7 +34,7 @@ public class Controlador {
     
     CommandManager manager = CommandManager.getIntance(); 
 
-    ArchivoCaretaker archivosRedos = new ArchivoCaretaker();
+    public ArchivoCaretaker archivosRedos = new ArchivoCaretaker();
     
     public Controlador(){
     }
@@ -150,20 +152,40 @@ public class Controlador {
     }
     
     public String undo() {
-
-        String retornado = archivosRedos.getPreviousMemento().getMemento().getContenido();
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        ICommand command = manager.getCommand("undo"); 
+        
+        // Setear el controlador
+        UndoCommand command2 = (UndoCommand) command;
+        command2.setControlador(this);
+        
+        // Ejecutar el comando
+        ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
+        
+        String retornado = arrayArchivo.get(0);
         return retornado;
 
     }
     
     public String redo() {
- 
-        String retornado = archivosRedos.getNextMemento().getMemento().getContenido();
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        ICommand command = manager.getCommand("redo"); 
+        
+        // Setear el controlador
+        RedoCommand command2 = (RedoCommand) command;
+        command2.setControlador(this);
+        
+        // Ejecutar el comando
+        ArrayList<String> arrayArchivo = command.execute(commandArgs, System.out); 
+        
+        String retornado = arrayArchivo.get(0);
         return retornado;
     }
     public void resetRedo(){
         archivosRedos.deleteNextsMementos();
-        
+        ICommand command = manager.getCommand("redo"); 
+        RedoCommand command2 = (RedoCommand) command;
+        command2.setControlador(this);
     }
     
     public void addUndo(String text){
@@ -174,6 +196,11 @@ public class Controlador {
             
         copia.setContenido(text);
         archivosRedos.addNewMemento( copia.createMemento());
+        
+        ICommand command = manager.getCommand("undo"); 
+        UndoCommand command2 = (UndoCommand) command;
+        command2.setControlador(this);
+        
     }
     
 

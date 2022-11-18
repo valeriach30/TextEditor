@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import Controlador.Controlador;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  */
 public class RedoCommand extends BaseCommand{
     public static final String COMMAND_NAME = "redo";       
-    
+    public Controlador control;
     @Override       
     public String getCommandName() {           
         return COMMAND_NAME;   
@@ -21,8 +22,13 @@ public class RedoCommand extends BaseCommand{
     
     @Override
     public ArrayList<String> execute(ArrayList<String> args, OutputStream out) {
-        // falta implementar
-        args.remove(args.size() - 1);
-        return  args;
+        ArrayList<String> array = new ArrayList<String>();
+        String resultado = control.archivosRedos.getNextMemento().getMemento().getContenido();
+        array.add(resultado);
+        return array;
+    }
+    
+    public void setControlador(Controlador control){
+        this.control = control;
     }
 }
