@@ -49,35 +49,34 @@ public class AbrirCommand extends BaseCommand{
             File archivo = new File(chooser.getSelectedFile().toString());
             try{
                 
-               Scanner scanner = new Scanner(archivo);
+                Scanner scanner = new Scanner(archivo);
                 if(filterTab == chooser.getFileFilter()){
+                    while(scanner.hasNextLine()){
+                        contenido += "<p>" + scanner.nextLine() + "</p>";
+                    }
+                }
+                else{
                     String temp;
+                    System.out.println("kk");
                     String temp2 = "";
                     String chars="";
                     while(scanner.hasNextLine()){
                         chars = "";
                         temp = scanner.nextLine();
-                        System.out.println(temp); 
-                        System.out.println("1"); 
+
                         for (int i = 0 ; i<temp.length() ; i++) {
+                            if( temp.charAt(i) == '\t'){
+                                chars = chars + "&emsp;&emsp;";
+                            }                             
                             chars = chars + temp.charAt(i);
-                            if(i%10==0 && i != 0){
-                                chars += "&emsp;&emsp;";
-                                System.out.println("kk");
-                                System.out.println(chars);
-                            }                
+                                 
                         }
                         temp2 += "<p>" + chars + "</p>";
                     }
-                    System.out.println(chars);
-                    System.out.println("aca");
                     contenido = temp2;
                 }
-                else{
-                    while(scanner.hasNextLine()){
-                     contenido += "<p>" + scanner.nextLine() + "</p>";
-                    }
-                }
+            
+                
                 
                 array.add(contenido);
                 array.add(chooser.getSelectedFile().getPath());
